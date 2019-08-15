@@ -1,6 +1,7 @@
 import { of } from 'rxjs';
 import { fromFetch } from 'rxjs/fetch';
 import { switchMap, catchError } from 'rxjs/operators';
+import { from } from 'rxjs';
 function sequence(amount: number): void {
     let i = 1;
     nextFetch();
@@ -39,7 +40,9 @@ function sequence(amount: number): void {
 
 function parallel(amount: number): void {
     let rez = '';
-    for (let i = 1; i < amount; i++) {
+    const arrayOfUsersURL = from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    arrayOfUsersURL.subscribe(
+    function qwe(i: number) {
         const data$ = fromFetch(`https://jsonplaceholder.typicode.com/users/${i}`).pipe(
             switchMap(response => {
                 if (response.ok) {
@@ -52,7 +55,7 @@ function parallel(amount: number): void {
                 console.error(err);
                 return of({ error: true, message: err.message })
             })
-        );
+        )
 
         data$.subscribe({
             next: result => {
@@ -67,7 +70,8 @@ function parallel(amount: number): void {
                 console.log('done');
             }
         })
-    }
+    })
+
 }
 
 function sequenceWithTime(amount: number): void {
@@ -166,18 +170,19 @@ function sequenceWithTimeAndContinue(amount: number): void {
         })
     }
 }
-document.getElementById('sequenceWithTimeAndContinue').addEventListener('click',()=>{
+document.getElementById('sequenceWithTimeAndContinue').addEventListener('click', () => {
     clearList();
-    sequenceWithTimeAndContinue(10)});
-document.getElementById('sequence').addEventListener('click',()=>{
+    sequenceWithTimeAndContinue(10)
+});
+document.getElementById('sequence').addEventListener('click', () => {
     clearList();
     sequence(10);
 });
-document.getElementById('parallel').addEventListener('click',()=>{
+document.getElementById('parallel').addEventListener('click', () => {
     clearList();
     parallel(10);
 });
-document.getElementById('sequenceWithTime').addEventListener('click',()=>{
+document.getElementById('sequenceWithTime').addEventListener('click', () => {
     clearList();
     sequenceWithTime(10);
 });
@@ -185,6 +190,6 @@ document.getElementById('sequenceWithTime').addEventListener('click',()=>{
 function clearList() {
     const myNode = document.getElementById("output");
     while (myNode.firstChild) {
-    myNode.removeChild(myNode.firstChild);
-}
+        myNode.removeChild(myNode.firstChild);
+    }
 }
