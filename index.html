@@ -11,6 +11,18 @@
         ul { list-style-type: none; padding: 20px; }
         li { padding: 20px; background: white; margin-bottom: 5px; }
         .warning { color: red}
+        #div {
+            width: 200px;
+            height: 200px;
+            background: red;
+        }
+        #dot {
+            height: 200px;
+            width: 200px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
@@ -20,6 +32,8 @@
     <button id="sequenceWithTimeAndContinue">SequenceWithTimeAndContinue</button>
     <ul id="output">        
     </ul>
+    <span id="dot"></span>
+    <div id="div"></div>
 
     <script src="/bundle.js"></script>
 </body>
